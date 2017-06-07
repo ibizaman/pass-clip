@@ -1,0 +1,75 @@
+.TH pass-clip 1 "June 2017" "pass-clip"
+
+.SH NAME
+pass clip - A \fBpass\fP(1) extension that lets you quickly copy to
+clipboard passwords using \fBfzf\fP(1) or \fBrofi\fP(1).
+
+.SH SYNOPSIS
+\fBpass clip\fP [options]
+
+.SH DESCRIPTION
+\fBpass clip\fP  Provide an interactive solution to copy passwords to
+the clipboard. It will show all pass-names in either fzf or rofi, waits
+for the user to select one then copy it to the clipboard.  The user can
+select fzf or rofi by giving either \fI--fzf\fP or \fI--rofi\fP.  By
+default, rofi will be selected and pass-clip will fallback to fzf. If
+the selected password does not exist, a new one will be generated
+automatically then copied to the clipboard. Specific password length can
+be given using \fI--length\fP and no symbols can be activate with
+\fI--no-symbols\fP. Note the latter two options must be given on the
+command line, one cannot specify them through fzf or rofi.
+
+.SH OPTIONS
+
+.TP
+\fB\-f\fB, \-\-fzf\fR
+Use fzf to select pass-name.
+
+.TP
+\fB\-r\fB, \-\-rofi\fR
+Use rofi to select pass-name.
+
+.TP
+\fB\-n\fB, \-\-no-symbols\fR
+Do not use any non-alphanumeric characters.
+
+.TP
+\fB\-l <size>\fB, \-\-length=<size>\fR
+Provide a password length.
+
+.TP
+\fB\-h\fB, \-\-help\fR
+Show usage message.
+
+.SH SEE ALSO
+.BR fzf(1),
+.BR pass(1),
+.BR rofi(1),
+
+.SH AUTHORS
+.B pass clip
+was written by
+.MT ibizapeanut@gmail.com
+Pierre PENNINCKX
+.ME .
+
+.SH ACKNOWLEDGMENTS
+Thanks to
+.B roddhjav
+https://github.com/roddhjav for creating
+.BR pass-update(1)
+https://github.com/roddhjav/pass-update from which this script is heavily inspired.
+
+.SH COPYING
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
