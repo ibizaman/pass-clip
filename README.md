@@ -64,7 +64,15 @@ Copied New/website.com to clipboard. Will clear in 45 seconds.
 
 ## Installation
 
-**Linux**
+
+### ArchLinux
+
+```sh
+pacaur -S pass-clip
+```
+
+
+### Other linuxes
 
 ```sh
 git clone https://github.com/ibizaman/pass-clip/
