@@ -72,7 +72,7 @@ cmd_clip() {
     [[ $err -ne 0 ]] && die "$(cmd_clip_short_usage)"
 
     # Figure out if we use fzf or rofi
-    local prompt='Copy password into clipboard for 45 seconds:'
+    local prompt='Copy password into clipboard for 45 seconds'
     local fzf_cmd="fzf --print-query --prompt=\"$prompt\" | tail -n1"
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
 
