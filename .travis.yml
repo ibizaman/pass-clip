@@ -10,9 +10,8 @@ env:
 addons:
   apt:
     sources:
-      - debian-sid
+      - debian
     packages:
-      - shellcheck
       - tree
 
 before_script:
