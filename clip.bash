@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # pass clip - Password Store Extension (https://www.passwordstore.org/)
-# Copyright (C) 2017 Pierre PENNINCKX <ibizapeanut@gmail.com>.
+# Copyright (C) 2019 Pierre PENNINCKX <ibizapeanut@gmail.com>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
