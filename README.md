@@ -1,4 +1,4 @@
-# pass clip 0.1 [![build status][build-img]][build-url]
+# pass clip 0.2 [![build status][build-img]][build-url]
 
 A [pass](https://www.passwordstore.org/) extension that lets you quickly copy
 to clipboard passwords using [fzf](https://github.com/junegunn/fzf) or
