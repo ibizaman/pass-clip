@@ -32,5 +32,7 @@ lint:
 aur:
 	cd aur && makepkg --printsrcinfo > .SRCINFO
 
+aur-push:
+	git submodule foreach 'git push'
 
 .PHONY: install uninstall lint aur
