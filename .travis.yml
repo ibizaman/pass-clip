@@ -7,6 +7,9 @@ env:
   - PASS_VERSION=1.7
   - PASS_VERSION=master
 
+git:
+  submodules: false
+
 addons:
   apt:
     sources:
