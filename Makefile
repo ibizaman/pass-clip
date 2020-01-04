@@ -30,7 +30,7 @@ lint:
 	shellcheck -s bash $(PROG).bash
 
 aur:
-	cd aur && makepkg --printsrcinfo > .SRCINFO
+	./update-aur.sh
 
 aur-push:
 	git submodule foreach 'git push'
