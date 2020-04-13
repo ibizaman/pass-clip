@@ -69,6 +69,14 @@ cmd_clip() {
             --) shift; break ;;
     esac done
 
+    if [[ $fzf = 0 && $rofi = 0 ]]; then
+        if [[ -n $(command -v fzf) ]]; then
+            fzf=1
+        elif [[ -n $(command -v rofi) ]]; then
+            rofi=1
+        fi
+    fi
+
     [[ $err -ne 0 ]] && die "$(cmd_clip_short_usage)"
 
     # Figure out if we use fzf or rofi
