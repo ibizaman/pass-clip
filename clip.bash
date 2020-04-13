@@ -70,9 +70,9 @@ cmd_clip() {
     esac done
 
     if [[ $fzf = 0 && $rofi = 0 ]]; then
-        if [[ -n $(command -v fzf) ]]; then
+        if command_exists fzf; then
             fzf=1
-        elif [[ -n $(command -v rofi) ]]; then
+        elif command_exists rofi; then
             rofi=1
         fi
     fi
@@ -95,13 +95,7 @@ cmd_clip() {
         command_exists fzf || die "Could not find fzf in \$PATH"
         menu="$fzf_cmd"
     else
-        if command_exists rofi; then
-            menu="$rofi_cmd"
-        elif command_exists fzf; then
-            menu="$fzf_cmd"
-        else
-            die "Could not find either fzf or rofi in \$PATH"
-        fi
+        die "Could not find either fzf or rofi in \$PATH"
     fi
 
     cd "$PASSWORD_STORE_DIR" || exit 1
