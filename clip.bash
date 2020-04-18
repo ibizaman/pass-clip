@@ -57,7 +57,8 @@ cmd_clip() {
     # Parse arguments
     local opts fzf=0 rofi=0
     local symbols="" length="25"
-    opts="$($GETOPT -o frnl: -l fzf,rofi,no-symbols,length: -n "$PROGRAM $COMMAND" -- "$@")"
+    local term=""
+    opts="$($GETOPT -o s:frnl: -l search-term:,fzf,rofi,no-symbols,length: -n "$PROGRAM $COMMAND" -- "$@")"
     local err=$?
     eval set -- "$opts"
 
@@ -66,6 +67,7 @@ cmd_clip() {
             -r|--rofi) rofi=1; shift ;;
             -n|--no-symbols) symbols="--no-symbols"; shift ;;
             -l|--length) length="$2"; shift 2 ;;
+            -s|--search-term) term="$2"; shift 2 ;;
             --) shift; break ;;
     esac done
 
@@ -81,8 +83,13 @@ cmd_clip() {
 
     # Figure out if we use fzf or rofi
     local prompt='Copy password into clipboard for 45 seconds'
-    local fzf_cmd="fzf --print-query --prompt=\"$prompt\" | tail -n1"
+    local fzf_cmd="fzf --print-query --prompt=\"$prompt\""
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
+
+    if [ -n "$term" ]; then
+      fzf_cmd="$fzf_cmd -q$term"
+    fi
+    fzf_cmd="$fzf_cmd | tail -n1"
 
     if [[ $fzf = 1 && $rofi = 1 ]]; then
         die 'Either --fzf,-f or --rofi,-r must be given, not both'
