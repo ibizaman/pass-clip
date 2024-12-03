@@ -83,7 +83,7 @@ cmd_clip() {
 
     # Figure out if we use fzf or rofi
     local prompt='Copy password into clipboard for 45 seconds'
-    local fzf_cmd="fzf --print-query --prompt=\"$prompt\""
+    local fzf_cmd="fzf --print-query --prompt=\"$prompt \""
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
 
     if [ -n "$term" ]; then
