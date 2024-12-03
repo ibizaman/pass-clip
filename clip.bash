@@ -109,7 +109,7 @@ cmd_clip() {
     cd "$PASSWORD_STORE_DIR" || exit 1
 
     # Select a passfile
-    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -iname '*.gpg' -printf '%P\n' |
+    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -path '*/.extensions' -prune -o -iname '*.gpg' -printf '%P\n' |
         sed -e 's/.gpg$//' |
         sort |
         eval "$menu")
