@@ -87,8 +87,8 @@ cmd_clip() {
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
 
     if [ -n "$term" ]; then
-      fzf_cmd="$fzf_cmd -q\"$term\""
-      rofi_cmd="$rofi_cmd -filter \"$term\""
+        fzf_cmd="$fzf_cmd -q\"$term\""
+        rofi_cmd="$rofi_cmd -filter \"$term\""
     fi
     fzf_cmd="$fzf_cmd | tail -n1"
 
@@ -109,10 +109,10 @@ cmd_clip() {
     cd "$PASSWORD_STORE_DIR" || exit 1
 
     # Select a passfile
-    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -iname '*.gpg' -printf '%P\n' \
-        | sed -e 's/.gpg$//' \
-        | sort \
-        | eval "$menu" )
+    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -iname '*.gpg' -printf '%P\n' |
+        sed -e 's/.gpg$//' |
+        sort |
+        eval "$menu")
 
     if [ -z "$passfile" ]; then
         die 'No passfile selected.'
