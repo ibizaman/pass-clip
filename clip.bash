@@ -87,14 +87,14 @@ cmd_clip() {
 
     # Figure out if we use fzf or rofi
     local prompt='Copy password into clipboard for 45 seconds'
-    local fzf_cmd="fzf --print-query --prompt=\"$prompt\""
+    local fzf_cmd="fzf --print-query --prompt=\"$prompt \""
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
     local choose_cmd="choose -m -p \"$prompt\""
 
     if [ -n "$term" ]; then
-      fzf_cmd="$fzf_cmd -q\"$term\""
-      rofi_cmd="$rofi_cmd -filter \"$term\""
-      choose_cmd="$choose_cmd -o \"$term\""
+        fzf_cmd="$fzf_cmd -q\"$term\""
+        rofi_cmd="$rofi_cmd -filter \"$term\""
+        choose_cmd="$choose_cmd -o \"$term\""
     fi
     fzf_cmd="$fzf_cmd | tail -n1"
 
@@ -118,10 +118,10 @@ cmd_clip() {
     cd "$PASSWORD_STORE_DIR" || exit 1
 
     # Select a passfile
-    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -iname '*.gpg' -printf '%P\n' \
-        | sed -e 's/.gpg$//' \
-        | sort \
-        | eval "$menu" )
+    passfile=$(find -L "$PASSWORD_STORE_DIR" -path '*/.git' -prune -o -path '*/.extensions' -prune -o -iname '*.gpg' -printf '%P\n' |
+        sed -e 's/.gpg$//' |
+        sort |
+        eval "$menu")
 
     if [ -z "$passfile" ]; then
         die 'No passfile selected.'
