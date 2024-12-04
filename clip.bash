@@ -39,6 +39,7 @@ cmd_clip_usage() {
     Options:
         -f, --fzf        Use fzf to select pass-name.
         -r, --rofi       Use rofi to select pass-name.
+        -c, --choose     Use choose to select pass-name.
         -n, --no-symbols Do not use any non-alphanumeric characters.
         -l, --length     Provide a password length.
 _EOF
@@ -46,7 +47,7 @@ _EOF
 }
 
 cmd_clip_short_usage() {
-    echo "Usage: $PROGRAM $COMMAND [--help,-h] [--fzf,-f]|[--rofi,-r] [--no-symbols,-n] [-l <s>,--length <s>]"
+    echo "Usage: $PROGRAM $COMMAND [--help,-h] [--fzf,-f]|[--rofi,-r][--choose,-c] [--no-symbols,-n] [-l <s>,--length <s>]"
 }
 
 command_exists() {
@@ -55,27 +56,30 @@ command_exists() {
 
 cmd_clip() {
     # Parse arguments
-    local opts fzf=0 rofi=0
+    local opts fzf=0 rofi=0 choose=0
     local symbols="" length="25"
     local term=""
-    opts="$($GETOPT -o s:frnl: -l search-term:,fzf,rofi,no-symbols,length: -n "$PROGRAM $COMMAND" -- "$@")"
+    opts="$($GETOPT -o s:frcnl: -l search-term:,fzf,rofi,choose,no-symbols,length: -n "$PROGRAM $COMMAND" -- "$@")"
     local err=$?
     eval set -- "$opts"
 
     while true; do case "$1" in
             -f|--fzf) fzf=1; shift ;;
             -r|--rofi) rofi=1; shift ;;
+            -c|--choose) choose=1; shift ;;
             -n|--no-symbols) symbols="--no-symbols"; shift ;;
             -l|--length) length="$2"; shift 2 ;;
             -s|--search-term) term="$2"; shift 2 ;;
             --) shift; break ;;
     esac done
 
-    if [[ $fzf = 0 && $rofi = 0 ]]; then
+    if [[ $fzf = 0 && $rofi = 0 && $choose = 0 ]]; then
         if command_exists fzf; then
             fzf=1
         elif command_exists rofi; then
             rofi=1
+        elif command_exists choose; then
+            choose=1
         fi
     fi
 
@@ -85,25 +89,30 @@ cmd_clip() {
     local prompt='Copy password into clipboard for 45 seconds'
     local fzf_cmd="fzf --print-query --prompt=\"$prompt \""
     local rofi_cmd="rofi -dmenu -i -p \"$prompt\""
+    local choose_cmd="choose -m -p \"$prompt\""
 
     if [ -n "$term" ]; then
         fzf_cmd="$fzf_cmd -q\"$term\""
         rofi_cmd="$rofi_cmd -filter \"$term\""
+        choose_cmd="$choose_cmd -o \"$term\""
     fi
     fzf_cmd="$fzf_cmd | tail -n1"
 
-    if [[ $fzf = 1 && $rofi = 1 ]]; then
-        die 'Either --fzf,-f or --rofi,-r must be given, not both'
+    if [[ ($fzf = 1 && $rofi = 1) || ($fzf = 1 && $choose = 1) || ($rofi = 1 && $choose = 1) ]]; then
+        die 'Either --fzf,-f or --rofi,-r or --choose,-c must be given'
     fi
 
-    if [[ $rofi = 1 || $fzf = 0 ]]; then
+    if [[ $rofi = 1 ]]; then
         command_exists rofi || die "Could not find rofi in \$PATH"
         menu="$rofi_cmd"
-    elif [[ $fzf = 1 || $rofi = 0 ]]; then
+    elif [[ $fzf = 1 ]]; then
         command_exists fzf || die "Could not find fzf in \$PATH"
         menu="$fzf_cmd"
+    elif [[ $choose = 1 ]]; then
+        command_exists choose || die "Could not find choose in \$PATH"
+        menu="$choose_cmd"
     else
-        die "Could not find either fzf or rofi in \$PATH"
+        die "Could not find either fzf, rofi or choose in \$PATH"
     fi
 
     cd "$PASSWORD_STORE_DIR" || exit 1

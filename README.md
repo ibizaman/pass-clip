@@ -1,8 +1,8 @@
 # pass clip 0.3 [![build status][build-img]][build-url]
 
 A [pass](https://www.passwordstore.org/) extension that lets you quickly copy
-to clipboard passwords using [fzf](https://github.com/junegunn/fzf) or
-[rofi](https://davedavenport.github.io/rofi/).
+to clipboard passwords using [fzf](https://github.com/junegunn/fzf),
+[rofi](https://davedavenport.github.io/rofi/) or [choose](https://github.com/chipsenkbeil/choose).
 
 
 ## Usage
